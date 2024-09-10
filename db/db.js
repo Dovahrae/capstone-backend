@@ -2,6 +2,19 @@ import Sequelize from "sequelize";
 
 const db = new Sequelize("postgres://localhost:5432/capstone");
 
+// process.env.DATABASE_URL
+// if it's not working try taking out the consts and add "let db;"
+if (process.env.DATABASE_URL === undefinded) {
+    console.log("connected locally");
+    const db = new Sequelize("postgres://localhost:5432/capstone", {
+        logging: false,
+    });
+} else {
+    const db = new Sequelize(process.env.DATABASE_URL, {
+        logging: false,
+    });
+}
+
 const connectToDB = async () => {
     try {
         await db.authenticate();
@@ -14,6 +27,6 @@ const connectToDB = async () => {
     }
 };
 
-connectToDB();
+await connectToDB();
 
 export { db };

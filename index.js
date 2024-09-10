@@ -10,6 +10,6 @@ server.get("/", (req, res) => {
     res.send({ api: "online" });
 });
 
-server.listen(3001, () => {
+server.listen(3001, "0.0.0.0", () => {
     console.log("api server online");
 });
