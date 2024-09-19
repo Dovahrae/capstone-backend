@@ -13,3 +13,8 @@ server.get("/", (req, res) => {
 server.listen(3001, "0.0.0.0", () => {
     console.log("api server online");
 });
+
+const checkForExistingUser = await User.findOne({
+    where: { email: "dovahrae36@gmail.com" },
+});
+console.log(checkForExistingUser);
