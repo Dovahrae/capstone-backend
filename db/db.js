@@ -29,6 +29,6 @@ const connectToDB = async () => {
     }
 };
 
-await connectToDB();
+connectToDB();
 
 export { db };
