@@ -1,8 +1,8 @@
 import Sequelize from "sequelize";
-import UserModel from "./User.js";
+// import UserModel from "./User.js";
 
 let db;
-const User = UserModel(db);
+// const User = UserModel(db);
 
 // process.env.DATABASE_URL
 // if it's not working try taking out the consts and add "let db;"
