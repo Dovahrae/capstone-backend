@@ -43,13 +43,35 @@ server.get("/toggleStatus/:room/:userId", async (req, res) => {
 });
 
 server.post("/toggleStatus", async (req, res) => {
-    await ToggleStatus.create(req.body);
-    res.send({
-        statuses: await ToggleStatus.findAll({
-            where: { userId: req.body.userId, room: req.body.room },
-        }),
+    const { userId, room, item } = req.body;
+
+    const existingToggle = await ToggleStatus.findOne({
+        where: { userId, room, item },
     });
+
+    if (existingToggle) {
+        await ToggleStatus.destroy({
+            where: { userId, room, item },
+        });
+    } else {
+        await ToggleStatus.create(req.body);
+    }
+
+    const updatedStatuses = await ToggleStatus.findAll({
+        where: { userId, room },
+    });
+
+    res.send({ statuses: updatedStatuses });
 });
+
+// server.post("/toggleStatus", async (req, res) => {
+//     await ToggleStatus.create(req.body);
+//     res.send({
+//         statuses: await ToggleStatus.findAll({
+//             where: { userId: req.body.userId, room: req.body.room },
+//         }),
+//     });
+// });
 // if it's toggled, untoggle and delete from the database
 
 server.listen(3001, () => {
