@@ -1,21 +1,13 @@
 import Sequelize from "sequelize";
-// import UserModel from "./User.js";
+import UserModel from "./User.js";
+import ToggleModel from "./ToggleStatus.js";
 
-let db;
-// const User = UserModel(db);
+const db = new Sequelize("postgres://localhost:5432/capstone", {
+    logging: false,
+});
 
-// process.env.DATABASE_URL
-// if it's not working try taking out the consts and add "let db;"
-if (process.env.DATABASE_URL === undefined) {
-    console.log("connected locally");
-    db = new Sequelize("postgres://localhost:5432/capstone", {
-        logging: false,
-    });
-} else {
-    db = new Sequelize(process.env.DATABASE_URL, {
-        logging: false,
-    });
-}
+const User = UserModel(db);
+const ToggleStatus = ToggleModel(db);
 
 const connectToDB = async () => {
     try {
@@ -31,4 +23,4 @@ const connectToDB = async () => {
 
 connectToDB();
 
-export { db };
+export { db, User, ToggleStatus };
